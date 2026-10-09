@@ -1,0 +1,247 @@
+* [33m7a8908c[m[33m ([m[1;32mmain[m[33m)[m errores enla camara
+* [33m86ca67c[m[33m ([m[1;36mHEAD[m[33m)[m ahora la camara funciona
+* [33me72ee61[m asda
+* [33md6f046c[m cambios en conexiones
+* [33mc483a49[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update README.md
+* [33md7fcd1a[m Update README.md
+* [33m0dd76b8[m Update README.md
+* [33me1fecd6[m Update README.md
+* [33m2f7a5ee[m Update README.md
+* [33m12852be[m Update README.md
+* [33mdcbad5e[m Update README.md
+* [33m8ce0f1e[m Update README.md
+* [33mf027faa[m Update README.md
+* [33m3227722[m Update README.md
+*   [33m18a3505[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[32m|[m[33m\[m  
+[32m|[m * [33mf3ab5e9[m Update README.md
+* [33m|[m [33m0db1075[m Latest Changes for the Update for User, Delete User
+[33m|[m[33m/[m  
+*   [33m2f5df08[m Merge pull request #19 from adnan10621/main
+[34m|[m[35m\[m  
+[34m|[m * [33m6b4ec26[m create roles fixed
+[34m|[m * [33me5e20a7[m requirments list added
+[34m|[m[34m/[m  
+*   [33m61ec031[m Merge pull request #18 from adnan10621/main
+[36m|[m[1;31m\[m  
+[36m|[m * [33m1262a36[m topbar updated
+[36m|[m * [33m2b995b8[m Routing mistake fixed
+[36m|[m * [33m9104be7[m Add files via upload
+[36m|[m * [33mdf42ee8[m Create credits.txt
+[36m|[m * [33m778a3b0[m User managment added, all apis moved to user/api
+* [1;31m|[m [33mac451bb[m Merge pull request #17 from adnan10621/main
+[1;32m|[m[1;31m\[m[1;31m|[m 
+[1;32m|[m * [33m2c43981[m User Managment Added
+[1;32m|[m * [33m138e1f8[m Removing Unesscary files & Update .gitignore
+[1;32m|[m *   [33m03a23d7[m Merge branch 'main' of https://github.com/adnan10621/Project_Foresight
+[1;32m|[m [1;34m|[m[1;35m\[m  
+[1;32m|[m [1;34m|[m * [33ma02f0ca[m top bar headng and send button fixed
+[1;32m|[m [1;34m|[m * [33m0858b21[m contact us and faq page updated  run the following command in the frontend to remove errors  npm i @emailjs/browser
+[1;32m|[m * [1;35m|[m [33mf8fa036[m Updated Changes
+[1;32m|[m [1;35m|[m[1;35m/[m  
+[1;32m|[m * [33m385c053[m fixed the fom for user profile
+[1;32m|[m * [33m4f35c79[m Auth V2 complete + removed unused vars
+[1;32m|[m * [33mfb114c3[m Fixes + Adnans Functionalities
+[1;32m|[m * [33m9214041[m Latest Changes to Notifications and Incidents
+[1;32m|[m * [33m5faad05[m ignored
+[1;32m|[m * [33m5e61b13[m updated packages
+[1;32m|[m * [33ma64f66f[m Updated packages
+[1;32m|[m * [33m8676b07[m Dependency Fix
+[1;32m|[m * [33m02a31b4[m clean code base #4 Fix Siam Routing
+[1;32m|[m * [33m234ad1c[m Cleander codebase #3
+[1;32m|[m * [33m5f2b7bf[m Cleaner codebase #2
+[1;32m|[m *   [33m0466e7e[m Merge branch 'main' of https://github.com/adnan10621/Project_Foresight
+[1;32m|[m [1;36m|[m[31m\[m  
+[1;32m|[m [1;36m|[m *   [33m2eafb8d[m[33m ([m[1;31morigin/Temp[m[33m)[m topbar jsx edit
+[1;32m|[m [1;36m|[m [32m|[m[33m\[m  
+[1;32m|[m [1;36m|[m [32m|[m * [33m8d1432b[m edited topbar jsx dropdown menu
+[1;32m|[m [1;36m|[m * [33m|[m [33mf6d243b[m edited topbar jsx dropdown menu
+[1;32m|[m [1;36m|[m [33m|[m[33m/[m  
+[1;32m|[m [1;36m|[m *   [33m23cac0b[m Merge branch 'main' of https://github.com/adnan10621/Project_Foresight
+[1;32m|[m [1;36m|[m [34m|[m[35m\[m  
+[1;32m|[m [1;36m|[m [34m|[m * [33m0a1f15b[m delete&download
+[1;32m|[m [1;36m|[m * [35m|[m [33m91a1b77[m updated the a path in app,js added a new screeen userprofile and made the dropdown menus
+[1;32m|[m [1;36m|[m [35m|[m[35m/[m  
+[1;32m|[m * [35m/[m [33m82f6a29[m Cleaner Code base
+[1;32m|[m [35m|[m[35m/[m  
+[1;32m|[m * [33m973835e[m comments added
+[1;32m|[m * [33me233dc4[m Updated Interface
+[1;32m|[m *   [33mbc8a568[m Merge branch 'main' of https://github.com/adnan10621/Project_Foresight
+[1;32m|[m [36m|[m[1;31m\[m  
+[1;32m|[m [36m|[m * [33m85fe7d6[m Latest Commit
+[1;32m|[m [36m|[m * [33m677afe3[m Latest Commits
+[1;32m|[m [36m|[m * [33m7dc097f[m Latest Changes
+[1;32m|[m [36m|[m * [33m5215294[m Updates to User Management, Main Theme
+[1;32m|[m * [1;31m|[m [33mfb547c6[m Sidebar and Logo Base
+[1;32m|[m [1;31m|[m[1;31m/[m  
+[1;32m|[m * [33mee8cdf7[m Latest Changes
+* [1;31m|[m [33meb9fec5[m Delete PostgresDB.session.sql
+[1;31m|[m[1;31m/[m  
+* [33m83d1e8a[m Update .gitignore
+* [33m6af6e61[m pychaches
+* [33m3f3e958[m Update .gitignore
+* [33mfa8c9cc[m Update .gitignore
+* [33m0f2a4ab[m Update .gitignore
+*   [33mf43dfd4[m Merge pull request #16 from adnan10621/main
+[1;32m|[m[1;33m\[m  
+[1;32m|[m *   [33m360c700[m Merge branch 'oceands:main' into main
+[1;32m|[m [1;34m|[m[1;32m\[m  
+[1;32m|[m [1;34m|[m[1;32m/[m  
+[1;32m|[m[1;32m/[m[1;34m|[m   
+* [1;34m|[m [33m4e216bf[m Update .gitignore
+* [1;34m|[m [33md420a26[m Update .gitignore
+[1;35m|[m * [33m0796e5d[m gitignore edited
+[1;35m|[m[1;35m/[m  
+* [33m2c1e385[m Create .gitignore
+* [33mc1f676b[m Delete server/venv directory
+* [33m0c70dbb[m New API example under server/endpoints/api & /auth
+*   [33m1246d00[m Merge pull request #14 from ButtonedPen/main
+[1;36m|[m[31m\[m  
+[1;36m|[m *   [33m5113070[m Merge branch 'oceands:main' into main
+[1;36m|[m [32m|[m[1;36m\[m  
+[1;36m|[m [32m|[m[1;36m/[m  
+[1;36m|[m[1;36m/[m[32m|[m   
+* [32m|[m   [33mbb5df41[m Merge pull request #13 from ButtonedPen/main
+[34m|[m[35m\[m [32m\[m  
+* [35m\[m [32m\[m   [33mc3fe0a6[m Merge pull request #12 from adnan10621/main
+[36m|[m[1;31m\[m [35m\[m [32m\[m  
+[36m|[m * [35m|[m [32m|[m [33m5a895d8[m color change
+* [1;31m|[m [35m|[m [32m|[m   [33m2b82a27[m Merge pull request #11 from simchan11/main
+[1;32m|[m[1;33m\[m [1;31m\[m [35m\[m [32m\[m  
+[1;32m|[m * [1;31m|[m [35m|[m [32m|[m [33m347b298[m Update App.js
+[1;32m|[m * [1;31m|[m [35m|[m [32m|[m [33m0d2f3b8[m Merge branch 'main' of https://github.com/simchan11/Project_Foresight
+[1;32m|[m [1;34m|[m[1;31m\[m[1;31m|[m [35m|[m [32m|[m 
+[1;32m|[m * [1;31m|[m [35m|[m [32m|[m [33m1b4990a[m Login Page
+[1;32m|[m * [1;31m|[m [35m|[m [32m|[m [33mac45d43[m Login Page
+* [1;35m|[m [1;31m|[m [35m|[m [32m|[m [33m225d328[m security settings page added
+* [1;35m|[m [1;31m|[m [35m|[m [32m|[m [33m1e973a7[m Security Settings Pages Added
+[1;31m|[m [1;35m|[m[1;31m/[m [35m/[m [32m/[m  
+[1;31m|[m[1;31m/[m[1;35m|[m [35m|[m [32m|[m   
+[1;31m|[m [1;35m|[m [35m|[m * [33m8490e1e[m changed the footer color in report and camera
+[1;31m|[m [1;35m|[m [35m|[m[35m/[m  
+[1;31m|[m [1;35m|[m * [33me1276b7[m changed the color report and camera setting
+[1;31m|[m [1;35m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;35m|[m   
+* [1;35m|[m   [33m21eb2e6[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[1;36m|[m[31m\[m [1;35m\[m  
+[1;36m|[m * [1;35m\[m   [33m4cb0a05[m Merge pull request #10 from ButtonedPen/main
+[1;36m|[m [32m|[m[33m\[m [1;35m\[m  
+[1;36m|[m [32m|[m * [1;35m|[m [33m8e3ccc5[m REMOVED
+[1;36m|[m [32m|[m * [1;35m|[m [33m7dfc42f[m nEW CODED ADDED
+[1;36m|[m [32m|[m[32m/[m [1;35m/[m  
+[1;36m|[m * [1;35m|[m [33m36a1ea7[m Test
+[1;36m|[m * [1;35m|[m [33mf150619[m test query
+[1;36m|[m * [1;35m|[m   [33m371d61d[m Merge pull request #9 from Saim-Ali/main
+[1;36m|[m [34m|[m[35m\[m [1;35m\[m  
+[1;36m|[m [34m|[m * [1;35m|[m [33me945dc7[m header reverted
+[1;36m|[m [34m|[m * [1;35m|[m [33ma482624[m changed header report
+[1;36m|[m [34m|[m[34m/[m [1;35m/[m  
+* [34m/[m [1;35m/[m [33mdc020ed[m Diveiders added on security settings
+[34m|[m[34m/[m [1;35m/[m  
+* [1;35m|[m   [33m881dffb[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[36m|[m[1;31m\[m [1;35m\[m  
+[36m|[m * [1;35m\[m   [33m6cf86bb[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[36m|[m [1;32m|[m[1;33m\[m [1;35m\[m  
+[36m|[m [1;32m|[m * [1;35m|[m [33m77412bc[m Delete client/src/pages/createReport directory
+[36m|[m * [1;33m|[m [1;35m|[m [33md7216bd[m Deleted the Create report sub folder inside pages and edited the code for report added a form
+[36m|[m [1;33m|[m[1;33m/[m [1;35m/[m  
+[36m|[m * [1;35m|[m [33m916a595[m Updated Camera settings and added a HEader to the dispatch form and also created A mockdata for the camera setting Table
+[36m|[m * [1;35m|[m [33mc5ba893[m Update README.md
+* [1;33m|[m [1;35m|[m [33m27d0ab4[m Security page base
+[1;33m|[m[1;33m/[m [1;35m/[m  
+* [1;35m|[m [33madfa271[m Delete package.json
+* [1;35m|[m [33m51ed5dc[m Delete package-lock.json
+* [1;35m|[m [33mf58de07[m Delete node_modules directory
+* [1;35m|[m   [33m5872b71[m[33m ([m[1;31morigin/Test[m[33m)[m Merge pull request #8 from adnan10621/main
+[1;34m|[m[1;35m\[m [1;35m\[m  
+[1;34m|[m * [1;35m\[m   [33mbd8b040[m Merge branch 'main' of https://github.com/adnan10621/Project_Foresight
+[1;34m|[m [1;36m|[m[1;34m\[m [1;35m\[m  
+[1;34m|[m [1;36m|[m[1;34m/[m [1;35m/[m  
+[1;34m|[m[1;34m/[m[1;36m|[m [1;35m|[m   
+* [1;36m|[m [1;35m|[m [33m8652c01[m commiting
+* [1;36m|[m [1;35m|[m   [33m3fbc060[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[32m|[m[33m\[m [1;36m\[m [1;35m\[m  
+[32m|[m * [1;36m|[m [1;35m|[m [33mb59c9e2[m report has been edited
+[32m|[m [1;35m|[m [1;36m|[m[1;35m/[m  
+[32m|[m [1;35m|[m[1;35m/[m[1;36m|[m   
+[32m|[m * [1;36m|[m   [33mfeb4e0e[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[32m|[m [34m|[m[35m\[m [1;36m\[m  
+[32m|[m [34m|[m * [1;36m|[m [33m8d58f23[m Update PostgresDB.session.sql
+[32m|[m [34m|[m * [1;36m|[m   [33m0eff1b1[m Merge pull request #7 from simchan11/main
+[32m|[m [34m|[m [36m|[m[1;31m\[m [1;36m\[m  
+[32m|[m [34m|[m [36m|[m * [1;36m|[m [33mdba655a[m my seccond commit
+[32m|[m [34m|[m [36m|[m * [1;36m|[m [33m196dfe3[m New test query added
+[32m|[m [34m|[m [36m|[m[36m/[m [1;36m/[m  
+[32m|[m * [36m/[m [1;36m/[m [33md4420df[m changed file from CreateReport to createReport
+[32m|[m [36m|[m[36m/[m [1;36m/[m  
+* [36m|[m [1;36m|[m [33ma1cfdd7[m checkign something
+[1;31m|[m [36m|[m * [33mc94fb78[m Latest Dispatch Changes
+[1;31m|[m [36m|[m[36m/[m  
+[1;31m|[m * [33m9352885[m Version Information added
+[1;31m|[m * [33ma082ec8[m Fixed CreateReport Form
+[1;31m|[m * [33mc399811[m Merge pull request #6 from Saim-Ali/main
+[1;31m|[m[1;31m/[m[1;33m|[m 
+[1;31m|[m *   [33m3fc456b[m Merge pull request #1 from oceands/main
+[1;31m|[m [1;34m|[m[1;31m\[m  
+[1;31m|[m [1;34m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;34m|[m   
+* [1;34m|[m [33m86a24dd[m Merge branch 'main' of https://github.com/oceands/Project_Foresight
+[1;36m|[m[1;34m\[m[1;34m|[m 
+[1;36m|[m * [33mb585872[m removed settings/index.jsx import
+[1;36m|[m * [33m1e74d59[m remove settings/index.jsx
+* [31m|[m [33m79b2742[m added date boilerplate in LocalizationProvider updated route in appjs update CreateReport
+[31m|[m[31m/[m  
+* [33m2a97527[m removed index.jsx
+*   [33m4dbbf01[m Merge pull request #5 from adnan10621/main
+[32m|[m[33m\[m  
+[32m|[m * [33m4ad4154[m latest commit
+[32m|[m[32m/[m  
+* [33m36a99fd[m New notifications page added
+* [33m39022ca[m New Route + settings/index.jsx rem old route conf
+*   [33m6df65a5[m Merge pull request #4 from Saim-Ali/main
+[34m|[m[35m\[m  
+[34m|[m * [33m31deb47[m pull
+* [35m|[m [33m372b1e1[m - New Hex added for sub menu and Sub menu created
+* [35m|[m   [33me06e35e[m Merge pull request #3 from adnan10621/adnan_updates
+[36m|[m[1;31m\[m [35m\[m  
+[36m|[m * [35m|[m [33m542c02e[m Changes for my part
+* [1;31m|[m [35m|[m   [33m9eb6ea9[m Merge pull request #2 from Saim-Ali/main
+[1;31m|[m[35m\[m [1;31m\[m [35m\[m  
+[1;31m|[m [35m|[m[1;31m/[m [35m/[m  
+[1;31m|[m[1;31m/[m[35m|[m [35m/[m   
+[1;31m|[m [35m|[m[35m/[m    
+[1;31m|[m * [33m301c7fe[m new query
+[1;31m|[m[1;31m/[m  
+* [33m9a2beb6[m Update README.md
+* [33m3860af6[m Update README.md
+* [33m5680227[m Update README.md
+* [33ma4f9fd7[m Update README.md
+* [33m5e2d089[m Update README.md
+* [33mfc7a1d7[m Update README.md
+* [33m52b8961[m Update README.md
+* [33m29a1259[m Update README.md
+* [33m2d0a3d0[m Update README.md
+* [33mbbcf9ff[m Update README.md
+* [33mf10961b[m Update README.md
+* [33m702c7bf[m Update README.md
+* [33m3586773[m Update README.md
+* [33m886cb6b[m Update README.md
+* [33m91ac77f[m Update README.md
+* [33m3cae8df[m Update README.md
+* [33m96ca93e[m Update README.md
+* [33mcfea6d9[m Update README.md
+* [33mca749ff[m Update README.md
+* [33m70c0516[m Update README.md
+* [33m41c7feb[m Update README.md
+* [33m4a8eec3[m Update README.md
+* [33m3ac1e75[m Update README.md
+* [33mf1ab331[m Update README.md
+* [33mbe7b802[m Update README.md
+* [33mc46bc82[m Update README.md
+* [33mfe1aa51[m Create README.md
+* [33m4431827[m COMMIT 4
+* [33m7d3e4e9[m Delete .vscode directory
+* [33m9296be2[m Commit 3
+* [33m392cc5d[m Commit 3
+* [33m7cf03ed[m Commit 2
+* [33m32a5915[m Initial commit
