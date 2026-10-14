@@ -10,7 +10,7 @@ from ultralytics import YOLO
 
 API_KEY = "Mk4aSvclv97CxPO5EKTL"
 WORKSPACE = "aldair-vjqwp"
-PROJECT = "trash-and-person-sytny"
+PROJECT = "basura-wg6iw"
 VERSION = 1
 
 def main():

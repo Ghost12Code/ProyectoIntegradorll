@@ -38,6 +38,9 @@ const CameraSelector = ({ onSourceChanged }) => {
           setCurrentActive(curr);
           if (curr === "0" || curr === "1" || curr === "2") {
             setSelectedOption(curr);
+          } else if (curr.startsWith("rtsp://")) {
+            setSelectedOption("rtsp");
+            setCustomUrl(curr);
           } else {
             setSelectedOption("url");
             setCustomUrl(curr);
@@ -66,9 +69,9 @@ const CameraSelector = ({ onSourceChanged }) => {
 
   const handleSwitchCamera = async () => {
     let targetSource = selectedOption;
-    if (selectedOption === "url") {
+    if (selectedOption === "url" || selectedOption === "rtsp") {
       if (!customUrl.trim()) {
-        setStatusMessage("Por favor ingrese la URL IP de la cámara del celular.");
+        setStatusMessage("Por favor ingrese la URL o IP de la cámara.");
         setStatusType("error");
         return;
       }
@@ -137,6 +140,7 @@ const CameraSelector = ({ onSourceChanged }) => {
     if (val === "0") return "Laptop (Cámara 0)";
     if (val === "1") return "Celular USB (Cámara 1)";
     if (val === "2") return "Cámara 2";
+    if (val.startsWith("rtsp")) return "Cámara de Seguridad (RTSP)";
     if (val.startsWith("http")) return "Celular WiFi (IP Web)";
     return `Fuente: ${val}`;
   };
@@ -198,20 +202,26 @@ const CameraSelector = ({ onSourceChanged }) => {
               <MenuItem value="url">
                 <Box display="flex" alignItems="center" gap={1}>
                   <FaWifi style={{ color: "#1976d2" }} />
-                  <span>Celular WiFi (IP Webcam URL)</span>
+                  <span>Celular WiFi (HTTP)</span>
+                </Box>
+              </MenuItem>
+              <MenuItem value="rtsp">
+                <Box display="flex" alignItems="center" gap={1}>
+                  <BsFillCameraFill style={{ color: "#d32f2f" }} />
+                  <span>Cámara de Seguridad (RTSP)</span>
                 </Box>
               </MenuItem>
             </Select>
           </FormControl>
 
-          {selectedOption === "url" && (
+          {(selectedOption === "url" || selectedOption === "rtsp") && (
             <TextField
               size="small"
-              placeholder="http://192.168.1.X:8080/video"
+              placeholder={selectedOption === "rtsp" ? "rtsp://admin:pass@192.168.1.50:554/stream" : "http://192.168.1.X:8080/video"}
               value={customUrl}
               onChange={(e) => setCustomUrl(e.target.value)}
               disabled={loading}
-              sx={{ minWidth: 250, backgroundColor: "#ffffff" }}
+              sx={{ minWidth: 280, backgroundColor: "#ffffff" }}
             />
           )}
 
