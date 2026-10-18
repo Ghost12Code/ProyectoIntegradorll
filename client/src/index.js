@@ -1,3 +1,16 @@
+// Bloqueo total y agresivo del error inofensivo de ResizeObserver para que nunca más aparezca
+const originalError = console.error;
+console.error = (...args) => {
+  if (args[0] && typeof args[0] === 'string' && args[0].includes('ResizeObserver')) return;
+  originalError.call(console, ...args);
+};
+window.addEventListener('error', e => {
+  if (e.message && e.message.includes('ResizeObserver')) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+  }
+});
+
 //react
 import React from "react";
 import ReactDOM from "react-dom";

@@ -1,135 +1,154 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { tokens } from "../../theme";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { AiFillFire } from "react-icons/ai";
-import { FaGun } from "react-icons/fa6";
-import { MdVerified } from "react-icons/md";
+import { MdVerified, MdPendingActions } from "react-icons/md";
 import { FaChartPie } from "react-icons/fa";
 import { BsFillCameraFill } from "react-icons/bs";
 import { Stack } from "@mui/material";
 import LineChart from "../../components/LineChart";
 import StatBox from "../../components/StatBox";
 import PieChart from "../../components/PieChart";
+import CameraSelector from "../../components/CameraSelector";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const colors = tokens;
+  const [cameraFeedKey, setCameraFeedKey] = useState(Date.now());
+  const API_URL = "http://127.0.0.1:5000/user";
 
-  // apiService.js
-  const API_URL = "http://127.0.0.1:5000/user"; // Replace with your actual API URL
-
-  const fetchFireIncidentsCount = async () => {
+  const fetchWasteAlertsCount = async () => {
     try {
       const response = await fetch(`${API_URL}/incidents/count/fire`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
       return data.fire_incident_count;
     } catch (error) {
-      console.error("Error fetching fire incident count:", error);
-      return 0; // Return a default value in case of error
+      console.error("Error fetching waste alerts count:", error);
+      return 0;
     }
   };
 
-  const fetchWeaponIncidentsCount = async () => {
+  const fetchPendingAlertsCount = async () => {
     try {
       const response = await fetch(`${API_URL}/incidents/count/weapon`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
       return data.weapon_incident_count;
     } catch (error) {
-      console.error("Error fetching weapon incident count:", error);
-      return 0; // Return a default value in case of error
+      console.error("Error fetching pending alerts count:", error);
+      return 0;
     }
   };
 
   const fetchVerifiedIncidentsCount = async () => {
     try {
       const response = await fetch(`${API_URL}/incidents/count/verified`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
       return data.verified_incident_count;
     } catch (error) {
       console.error("Error fetching verified incident count:", error);
-      return 0; // Return a default value in case of error
+      return 0;
     }
   };
 
   const fetchDispatchData = async () => {
     try {
       const response = await fetch(`${API_URL}/dispatch/count`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       const jsonData = await response.json();
-      return jsonData;
+      
+      // Sanitizar: Mapear 'fire', 'weapon' o 'others' inmediatamente a residuos
+      if (Array.isArray(jsonData)) {
+        return jsonData.map(item => {
+          const lower = (item.id || item.label || "").toLowerCase();
+          if (lower.includes("fire")) {
+            return { ...item, id: "Bolsas de Basura", label: "Bolsas de Basura", color: "#2e7d32" };
+          }
+          if (lower.includes("weapon")) {
+            return { ...item, id: "Desmonte / Escombros", label: "Desmonte / Escombros", color: "#ff5722" };
+          }
+          if (lower.includes("other")) {
+            return { ...item, id: "Costales y Bultos", label: "Costales y Bultos", color: "#3f51b5" };
+          }
+          return item;
+        });
+      }
+      return defaultWasteData;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching dispatch data:", error);
+      return defaultWasteData;
     }
   };
 
   const fetchIncidentData = async () => {
     try {
       const response = await fetch(`${API_URL}/incidents/monthly-count`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching monthly incident data:", error);
+      return [];
     }
   };
 
-  const [fireIncidentCount, setFireIncidentCount] = useState(0);
-  const [weaponIncidentCount, setWeaponIncidentCount] = useState(0);
+  const [wasteAlertsCount, setWasteAlertsCount] = useState(0);
+  const [pendingAlertsCount, setPendingAlertsCount] = useState(0);
   const [verifiedIncidentCount, setVerifiedIncidentCount] = useState(0);
-  const [DispatchData, setDispatchData] = useState([]);
+  const defaultWasteData = [
+    { id: "Bolsas de Basura", label: "Bolsas de Basura", value: 0, color: "#2e7d32" },
+    { id: "Desmonte / Escombros", label: "Desmonte / Escombros", value: 0, color: "#ff5722" },
+    { id: "Costales y Bultos", label: "Costales y Bultos", value: 0, color: "#3f51b5" },
+    { id: "Otros Desechos", label: "Otros Desechos", value: 0, color: "#607d8b" },
+  ];
+  const [DispatchData, setDispatchData] = useState(defaultWasteData);
   const [incidentData, setIncidentData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const fireCount = await fetchFireIncidentsCount();
-      const weaponCount = await fetchWeaponIncidentsCount();
+      const wasteCount = await fetchWasteAlertsCount();
+      const pendingCount = await fetchPendingAlertsCount();
       const verifiedCount = await fetchVerifiedIncidentsCount();
       const dispatchCount = await fetchDispatchData();
       const incidentDataCount = await fetchIncidentData();
 
-      setFireIncidentCount(fireCount);
-      setWeaponIncidentCount(weaponCount);
+      setWasteAlertsCount(wasteCount);
+      setPendingAlertsCount(pendingCount);
       setVerifiedIncidentCount(verifiedCount);
-      setDispatchData(dispatchCount);
-      setIncidentData(incidentDataCount);
-      console.log(incidentDataCount);
+      setDispatchData(Array.isArray(dispatchCount) ? dispatchCount : []);
+      setIncidentData(Array.isArray(incidentDataCount) ? incidentDataCount : []);
     };
 
     fetchData();
   }, []);
 
-  const totalValue = DispatchData.reduce(
-    (total, item) => total + item.value,
+  const totalValue = (DispatchData || []).reduce(
+    (total, item) => total + (item.value || 0),
     0
-  ); // Calculate total value for pie chart data
-  const progressPercent = DispatchData.map(
-    (item) => (item.value / totalValue) * 100
-  ); // Calculate progress percentage and progress values for pie chart
-  const progressValues = DispatchData.map((item) => item.value);
+  );
+  const progressPercent = (DispatchData || []).map(
+    (item) => (totalValue > 0 ? (item.value / totalValue) * 100 : 0)
+  );
+  const progressValues = (DispatchData || []).map((item) => item.value);
 
   return (
-    // STATS, GRAPHS AND FEED
-
     <Box backgroundColor={colors.primary[500]} p={3} minHeight={"100vh"}>
-      <Grid container spacing={1}>
-        <Grid container xs={12} sm={7} lg={9}>
+      <Box mb={2}>
+        <Typography variant="h4" fontWeight="bold" color={colors.blackAccents[100]}>
+          PANEL DE CONTROL - SIMRA
+        </Typography>
+        <Typography variant="subtitle1" color="#FF5722" fontWeight="600">
+          Monitoreo y Detección de Arrojo de Residuos Sólidos en el Puente Santa Isabel
+        </Typography>
+      </Box>
+
+      <Grid container spacing={2}>
+        <Grid container xs={12} sm={12} lg={9}>
           <Stack
-            spacing={1}
+            spacing={2}
             flex="1 1 0"
             direction={{
               xs: "column",
@@ -138,9 +157,11 @@ const Dashboard = () => {
               lg: "row",
               xl: "row",
             }}
-            p={2}
+            p={1}
+            width="100%"
           >
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={4}>
+            {/* STATBOX 1: Detecciones de Residuos */}
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Box
                 backgroundColor={colors.secondary[400]}
                 display="flex"
@@ -149,10 +170,10 @@ const Dashboard = () => {
                 borderRadius="8px"
               >
                 <StatBox
-                  title={fireIncidentCount.toString()}
-                  subtitle="Total Fire Incidents"
+                  title={wasteAlertsCount.toString()}
+                  subtitle="Detecciones de Residuos"
                   icon={
-                    <AiFillFire
+                    <BsFillCameraFill
                       style={{
                         color: colors.orangeAccents[500],
                         fontSize: "26px",
@@ -163,8 +184,8 @@ const Dashboard = () => {
               </Box>
             </Grid>
 
-            {/* GRID ITEM 1.2*/}
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={4}>
+            {/* STATBOX 2: Alertas Pendientes */}
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Box
                 backgroundColor={colors.secondary[400]}
                 display="flex"
@@ -173,10 +194,10 @@ const Dashboard = () => {
                 borderRadius="8px"
               >
                 <StatBox
-                  title={weaponIncidentCount.toString()}
-                  subtitle="Total Weapon Incidents"
+                  title={pendingAlertsCount.toString()}
+                  subtitle="Alertas Pendientes"
                   icon={
-                    <FaGun
+                    <MdPendingActions
                       style={{
                         color: colors.orangeAccents[500],
                         fontSize: "26px",
@@ -187,8 +208,8 @@ const Dashboard = () => {
               </Box>
             </Grid>
 
-            {/* GRID ITEM 1.3*/}
-            <Grid item xs={12} sm={12} md={3} lg={3} xl={4}>
+            {/* STATBOX 3: Incidentes Verificados */}
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Box
                 backgroundColor={colors.secondary[400]}
                 display="flex"
@@ -198,9 +219,9 @@ const Dashboard = () => {
               >
                 <StatBox
                   title={verifiedIncidentCount.toString()}
-                  subtitle="Total Verified Incidents"
-                  progress="0.30"
-                  increase="+5%"
+                  subtitle="Incidentes Verificados"
+                  progress="1.0"
+                  increase="+100%"
                   icon={
                     <MdVerified
                       style={{
@@ -214,222 +235,153 @@ const Dashboard = () => {
             </Grid>
           </Stack>
 
-          <Stack spacing={1} p={2}>
-            {/*FEED AND VIDEOS */}
-            {/*THIS IS THE WHITE CONTAINER WHICH WILL STORE THE ITEMS */}
-
-            <Box backgroundColor={colors.secondary[500]} borderRadius="8px">
+          {/* VISOR EN VIVO DE CÁMARA */}
+          <Stack spacing={1} p={1} width="100%">
+            <Box backgroundColor={colors.secondary[500]} borderRadius="8px" p={2}>
               <Box
-                mt="25px"
-                p="0 30px"
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
+                mb={2}
               >
-                {/*THIS IS THE CONTAINER WHICH WILL STORE THE lOGO AND NAME */}
                 <Box display="flex" alignItems="center">
                   <BsFillCameraFill
                     style={{
                       color: colors.orangeAccents[500],
-                      fontSize: "26px",
+                      fontSize: "24px",
                     }}
                   />
                   <Typography
-                    variant="h7"
+                    variant="h6"
                     fontWeight="bold"
                     paddingLeft={1}
                     sx={{ color: colors.blackAccents[500] }}
                   >
-                    View Live Feed
+                    Cámara en Vivo - Puente Santa Isabel (YOLOv8)
                   </Typography>
                 </Box>
 
-                {/*THIS IS THE CONTAINER WHICH WILL HOLD THE ARROW */}
                 <Box>
                   <Link to="/view_feed">
-                    <IconButton>
-                      <AiOutlineArrowRight
-                        sx={{
-                          fontSize: "26px",
-                          color: colors.blackAccents[500],
-                        }}
-                      />
-                    </IconButton>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      endIcon={<AiOutlineArrowRight />}
+                    >
+                      Pantalla Completa
+                    </Button>
                   </Link>
                 </Box>
               </Box>
 
-              <Box p={1}>
-                {/*GRID 2 */}
-                <Grid container rowSpacing={1} columnSpacing={1}>
-                  {/*GRID item 2.1 */}
-                  <Grid item xs={12} sm={12} md={3} lg={3} xl={4}>
-                    <Box
-                      width="100%"
-                      backgroundColor={colors.primary[400]}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      {/*Insert the video / RTSP FEED HERE */}
-                      <img
-                        src={"../../assets/vid-evidence.jpg"}
-                        alt="sample"
-                        style={{ maxWidth: "100%", height: "auto" }} // Controlling image dimensions
-                      />
-                    </Box>
-                  </Grid>
-                  {/*GRID item 2.2 */}
-                  <Grid item xs={12} sm={12} md={3} lg={3} xl={4}>
-                    <Box
-                      width="100%"
-                      backgroundColor={colors.primary[400]}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      {/*Insert the video / RTSP FEED HERE */}
-                      <img
-                        src={"../../assets/vid-evidence.jpg"}
-                        alt="sample"
-                        style={{ maxWidth: "100%", height: "auto" }} // Controlling image dimensions
-                      />
-                    </Box>
-                  </Grid>
-                  {/*GRID item 2.3 */}
-                  <Grid item xs={12} sm={12} md={3} lg={3} xl={4}>
-                    <Box
-                      width="100%"
-                      backgroundColor={colors.primary[400]}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      {/*Insert the video / RTSP FEED HERE */}
-                      <img
-                        src={"../../assets/vid-evidence.jpg"}
-                        alt="sample"
-                        style={{ maxWidth: "100%", height: "auto" }} // Controlling image dimensions
-                      />
-                    </Box>
-                  </Grid>
-                </Grid>
-                {/*END OF THE GRID 2 */}
+              <CameraSelector onSourceChanged={() => setCameraFeedKey(Date.now())} />
+
+              <Box display="flex" justifyContent="center" alignItems="center" p={1}>
+                <img
+                  key={cameraFeedKey}
+                  src={`http://127.0.0.1:5000/local-camera/feed?t=${cameraFeedKey}`}
+                  alt="Transmisión Puente Santa Isabel"
+                  style={{
+                    width: "100%",
+                    maxHeight: "380px",
+                    objectFit: "contain",
+                    borderRadius: "6px",
+                    backgroundColor: "#000",
+                  }}
+                />
               </Box>
             </Box>
           </Stack>
         </Grid>
 
-        <Grid container item xs={12} sm={12} lg={3} p={3}>
+        {/* ANALÍTICAS LATERALES */}
+        <Grid container item xs={12} sm={12} lg={3} p={1}>
           <Box
             backgroundColor={colors.secondary[500]}
             width={"100%"}
             borderRadius="8px"
+            p={2}
           >
             <Box
-              mt="10px"
-              p="0 30px"
               display="flex"
-              justifyContent="space-between"
               alignItems="center"
+              mb={2}
             >
-              {/*THIS IS THE CONTAINER WHICH WILL STORE THE lOGO AND NAME */}
-              <Box display="flex" alignItems="center">
-                <FaChartPie
-                  style={{
-                    color: colors.orangeAccents[500],
-                    fontSize: "26px",
-                    transform: "scaleX(-1)",
-                  }}
-                />
-                <Typography
-                  variant="h7"
-                  fontWeight="bold"
-                  paddingLeft={1}
-                  paddingTop={2}
-                  sx={{ color: colors.blackAccents[500] }}
-                >
-                  Weekly Analytics
-                </Typography>
-              </Box>
-            </Box>
-            {/*This is the Box which will contain the pie chart */}
-            <Box m="20px">
-              <Box height="25vh">
-                <PieChart isDashboard={true} data={DispatchData} />
-              </Box>
-
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
+              <FaChartPie
+                style={{
+                  color: colors.orangeAccents[500],
+                  fontSize: "22px",
+                }}
+              />
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                paddingLeft={1}
+                sx={{ color: colors.blackAccents[500] }}
               >
-                {DispatchData.map((item, index) => (
-                  <Box
-                    key={item.id}
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    mb={2}
-                  >
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      width="100%"
-                    >
-                      <Typography fontWeight="medium">{item.label}</Typography>
-                      <Typography fontWeight="medium">
-                        {progressValues[index]}
-                      </Typography>
-                    </Box>
-                    <progress
-                      value={progressPercent[index]}
-                      max={100}
-                      style={{
-                        width: "250px",
-                        backgroundColor: item.color + " !important",
-                      }}
-                    />
+                Tipos de Residuos Sólidos
+              </Typography>
+            </Box>
+
+            <Box height="25vh">
+              <PieChart isDashboard={true} data={DispatchData} />
+            </Box>
+
+            <Box mt={2}>
+              {DispatchData.map((item, index) => (
+                <Box
+                  key={item.id || index}
+                  display="flex"
+                  flexDirection="column"
+                  mb={1.5}
+                >
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography fontSize="13px" fontWeight="medium">{item.label}</Typography>
+                    <Typography fontSize="13px" fontWeight="medium">
+                      {progressValues[index]}
+                    </Typography>
                   </Box>
-                ))}
-              </Box>
+                  <progress
+                    value={progressPercent[index] || 0}
+                    max={100}
+                    style={{
+                      width: "100%",
+                      height: "8px",
+                      borderRadius: "4px",
+                    }}
+                  />
+                </Box>
+              ))}
             </Box>
           </Box>
         </Grid>
 
-        <Grid container item xs={12} sm={12} lg={12} p={3}>
+        {/* GRÁFICO HISTÓRICO INFERIOR */}
+        <Grid container item xs={12} sm={12} lg={12} p={1}>
           <Box
             backgroundColor={colors.secondary[400]}
             borderRadius="8px"
             width={"100%"}
+            p={2}
           >
-            <Box
-              mt="25px"
-              p="0 30px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Box display="flex" alignItems="center">
-                <FaChartPie
-                  style={{
-                    color: colors.orangeAccents[500],
-                    fontSize: "26px",
-                    transform: "scaleX(-1)",
-                  }}
-                />
-                <Typography
-                  variant="h7"
-                  fontWeight="bold"
-                  paddingLeft={1}
-                  sx={{ color: colors.blackAccents[500] }}
-                >
-                  Dashboard Analytics
-                </Typography>
-              </Box>
+            <Box display="flex" alignItems="center" mb={1}>
+              <FaChartPie
+                style={{
+                  color: colors.orangeAccents[500],
+                  fontSize: "22px",
+                }}
+              />
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                paddingLeft={1}
+                sx={{ color: colors.blackAccents[500] }}
+              >
+                Tendencia Mensual de Detección de Infracciones
+              </Typography>
             </Box>
-            <Box height="250px" m="-20px 0 0 0">
+            <Box height="240px" m="0">
               <LineChart isDashboard={true} data={incidentData} />
             </Box>
           </Box>

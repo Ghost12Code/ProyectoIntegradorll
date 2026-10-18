@@ -424,35 +424,35 @@ const Reports = () => {
 
     {
       field: "id",
-      headerName: "Report ID",
+      headerName: "ID de Reporte",
       disableColumnMenu: true,
       cellClassName: "name-column--cell",
       flex: 1, // Space columns equally
     },
     {
       field: "title",
-      headerName: "Title",
+      headerName: "Título",
       disableColumnMenu: true,
       cellClassName: "name-column--cell",
       flex: 1, // Space columns equally
     },
     {
       field: "IncidentID",
-      headerName: "Incident ID",
+      headerName: "ID de Incidente",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
     },
     {
       field: "createdBy",
-      headerName: "Created By",
+      headerName: "Generado Por",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
     },
     {
       field: "DateCreated",
-      headerName: "Date Created",
+      headerName: "Fecha de Creación",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
@@ -460,7 +460,7 @@ const Reports = () => {
 
     {
       field: "action",
-      headerName: "Action",
+      headerName: "Acciones",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,

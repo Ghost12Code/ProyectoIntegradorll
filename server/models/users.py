@@ -64,7 +64,14 @@ class Users(db.Model):
         self.jwt_auth_active = set_status
 
     def get_role(self):
-        return self.roles[0].name if self.roles else None
+        if not self.roles:
+            return None
+        role_names = [r.name for r in self.roles]
+        if "Super Administrator" in role_names:
+            return "Super Administrator"
+        if "Administrator" in role_names or "Admin" in role_names:
+            return "Super Administrator"
+        return role_names[0]
     
     def close(self):
         db.session.close()

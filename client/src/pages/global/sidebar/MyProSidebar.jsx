@@ -50,7 +50,9 @@ const MyProSidebar = () => {
 
   // Function to check if the current role is permitted to see an item
   const isPermitted = (permittedRoles) => {
-    return permittedRoles.includes(Role);
+    if (!Role) return true;
+    if (Role === "Super Administrator" || Role === "Administrator" || Role === "Admin") return true;
+    return permittedRoles.includes(Role) || permittedRoles.includes("Admin");
   };
   return (
     <Box
@@ -113,29 +115,20 @@ const MyProSidebar = () => {
       >
         <Menu iconshape="square">
           {!collapsed && (
-            <Box mb="25px">
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                paddingTop="40px"
-                paddingBottom="40px"
-                sx={{
-                  "& .avater-image": {
-                    backgroundColor: colors.secondary[500],
-                  },
-                }}
+            <Box mb="20px" p="25px 10px 10px 10px" textAlign="center">
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                style={{ fontSize: "16px", letterSpacing: "1px", color: colors.secondary[100] }}
               >
-                <img
-                  className="logo-image"
-                  alt="Logo sidebar"
-                  width="124px"
-                  height="102px"
-                  src={"../../assets/logoNew.png"}
-                  style={{ cursor: "pointer", padding: "10px" }}
-                />
-              </Box>
-              <Box textAlign="center"></Box>
+                SIMRA
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                style={{ fontSize: "12px", color: "#FF5722", fontWeight: 600, marginTop: "4px" }}
+              >
+                Puente Santa Isabel - Residuos
+              </Typography>
             </Box>
           )}
           <Box paddingLeft={collapsed ? undefined : "0"}>
@@ -146,8 +139,8 @@ const MyProSidebar = () => {
                     variant="h6"
                     style={{ fontWeight: 600, fontSize: 14 }}
                   >
-                    Dashboard
-                  </Typography>
+  Panel Principal
+</Typography>
                 }
                 to="/"
                 icon={<FaChartPie style={{ fontSize: 20 }} />}
@@ -163,8 +156,25 @@ const MyProSidebar = () => {
                     variant="h6"
                     style={{ fontWeight: 600, fontSize: 14 }}
                   >
-                    Notifications
-                  </Typography>
+  Cámara en Vivo
+</Typography>
+                }
+                to="/view_feed"
+                icon={<AiOutlineCamera style={{ fontSize: 20 }} />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
+
+            {isPermitted(["Super Administrator", "Admin", "Normal User"]) && (
+              <Item
+                title={
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: 600, fontSize: 14 }}
+                  >
+  Notificaciones
+</Typography>
                 }
                 to="/notifications"
                 icon={<MdOutlineNotificationAdd style={{ fontSize: 20 }} />}
@@ -179,8 +189,8 @@ const MyProSidebar = () => {
                     variant="h6"
                     style={{ fontWeight: 600, fontSize: 14 }}
                   >
-                    Incidents
-                  </Typography>
+  Incidentes
+</Typography>
                 }
                 to="/incidents"
                 icon={<FaRegEye style={{ fontSize: 20 }} />}
@@ -196,8 +206,8 @@ const MyProSidebar = () => {
                     variant="h6"
                     style={{ fontWeight: 600, fontSize: 14 }}
                   >
-                    User Management
-                  </Typography>
+  Gestión de Usuarios
+</Typography>
                 }
                 to="/usermgnt"
                 icon={<LuUsers style={{ fontSize: 20 }} />}
@@ -212,8 +222,8 @@ const MyProSidebar = () => {
                     variant="h6"
                     style={{ fontWeight: 600, fontSize: 14 }}
                   >
-                    Reports
-                  </Typography>
+  Reportes
+</Typography>
                 }
                 to="/reports"
                 icon={<TbReport style={{ fontSize: 20 }} />}
@@ -230,8 +240,8 @@ const MyProSidebar = () => {
                   variant="h6"
                   style={{ fontWeight: 600, fontSize: 14 }}
                 >
-                  Settings
-                </Typography>
+  Configuración
+</Typography>
               }
               icon={<LuSettings style={{ fontSize: 20 }} />}
               selected={selected}
@@ -251,8 +261,8 @@ const MyProSidebar = () => {
                         marginLeft: "20px",
                       }}
                     >
-                      Camera
-                    </Typography>
+  Cámaras
+</Typography>
                   }
                   to="/settings/camsetting"
                   icon={
@@ -276,8 +286,8 @@ const MyProSidebar = () => {
                         marginLeft: "20px",
                       }}
                     >
-                      Dispatch
-                    </Typography>
+  Alertas
+</Typography>
                   }
                   to="/settings/dispatchsettings"
                   icon={
@@ -299,8 +309,8 @@ const MyProSidebar = () => {
                         marginLeft: "20px",
                       }}
                     >
-                      System Info
-                    </Typography>
+  Información del Sistema
+</Typography>
                   }
                   to="/settings/versioninfo"
                   icon={<FiInfo style={{ fontSize: 20, marginLeft: "18px" }} />}
@@ -320,8 +330,8 @@ const MyProSidebar = () => {
                         marginLeft: "20px",
                       }}
                     >
-                      Security
-                    </Typography>
+  Seguridad
+</Typography>
                   }
                   to="/settings/security"
                   icon={
@@ -336,37 +346,7 @@ const MyProSidebar = () => {
             </SubMenu>
           </Box>
 
-          <Box paddingLeft={collapsed ? undefined : "0"}>
-            <Item
-              title={
-                <Typography
-                  variant="h6"
-                  style={{ fontWeight: 600, fontSize: 14 }}
-                >
-                  FAQ Page
-                </Typography>
-              }
-              to="/faq"
-              icon={<AiOutlineQuestionCircle style={{ fontSize: 20 }} />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
-            <Item
-              title={
-                <Typography
-                  variant="h6"
-                  style={{ fontWeight: 600, fontSize: 14 }}
-                >
-                  Contact Us
-                </Typography>
-              }
-              to="/contact"
-              icon={<FiHeadphones style={{ fontSize: 20 }} />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </Box>
         </Menu>
         <Box paddingTop={20}>
           <Typography
@@ -379,7 +359,7 @@ const MyProSidebar = () => {
             width="100%"
             fontWeight="bold"
           >
-            Version 2.0
+            SIMRA
           </Typography>
         </Box>
       </Sidebar>

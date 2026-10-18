@@ -40,20 +40,21 @@ const Topbar = () => {
   firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
   const routeTextMap = {
-    "/dashboard": "Welcome Back, " + firstName,
-    "/view_feed": "View Live Feed",
-    "/notifications": "Notifications",
-    "/incidents": "Incidents",
-    "/usermgnt": "User Management",
-    "/reports": "Reports",
-    "/ai": "Artificial Intelligence",
-    "/contact": "Contact Us",
-    "/faq": "FAQ",
-    "/settings/camsetting": "Camera Settings",
-    "/settings/dispatchsettings": "Dispatch Settings",
-    "/settings/floorplan": "Floor Plan",
-    "/settings/versioninfo": "Version Info",
-    "/settings/security": "Security",
+    "/dashboard": "Bienvenido al Sistema SIMRA, " + firstName,
+    "/": "Bienvenido al Sistema SIMRA, " + firstName,
+    "/view_feed": "Cámara en Vivo - Puente Santa Isabel",
+    "/notifications": "Bandeja de Notificaciones de Residuos",
+    "/incidents": "Registro de Incidentes Verificados",
+    "/usermgnt": "Gestión de Usuarios",
+    "/reports": "Generación de Reportes",
+    "/ai": "Inteligencia Artificial",
+    "/contact": "Contacto",
+    "/faq": "Ayuda",
+    "/settings/camsetting": "Ajustes de Cámaras",
+    "/settings/dispatchsettings": "Configuración de Alertas",
+    "/settings/floorplan": "Plano de Ubicación",
+    "/settings/versioninfo": "Información del Sistema",
+    "/settings/security": "Seguridad",
   };
 
   const welcomeText = routeTextMap[currentRoute];
@@ -63,10 +64,10 @@ const Topbar = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   const notifications = [
-    { type: "fire", message: "Fire alert message", unread: true },
-    { type: "smoke", message: "Smoke alert message", unread: false },
-    { type: "gun", message: "Gun alert message", unread: true },
-    { type: "fire", message: "Another fire alert message", unread: false },
+    { type: "bolsas", message: "Bolsa de residuos abandonada en acera del puente", unread: true },
+    { type: "desmonte", message: "Detección de desmonte / escombros en el cauce", unread: false },
+    { type: "costales", message: "Costal voluminoso detectado en vía pública", unread: true },
+    { type: "bolsas", message: "Residuos domésticos detectados por IA", unread: false },
   ];
 
   const handleClick = (event) => {
@@ -115,7 +116,7 @@ const Topbar = () => {
   //     .post("auth/api/users/logout")
   //     .then(function (logoutResponse) {
   //       if (logoutResponse.data.success) {
-  //         // Logout was successful, proceed to revoke_refresh
+  //         // Cerrar Sesión
 
   //         // Send a request to revoke_refresh
   //         return axios.post(
@@ -126,8 +127,8 @@ const Topbar = () => {
   //           }
   //         );
   //       } else {
-  //         // Logout was unsuccessful
-  //         console.log("Logout unsuccessful: ", logoutResponse.data.msg);
+  //         // Cerrar Sesión
+  //         console.log("Cerrar Sesión
   //         return;
   //       }
   //     })
@@ -222,19 +223,18 @@ const Topbar = () => {
                 onChange={handleFilterChange}
                 label="Filter"
               >
-                <MenuItem value="all">All Notifications</MenuItem>
-                <MenuItem value="unread">Unread</MenuItem>
-                <MenuItem value="fire">Fire</MenuItem>
-                <MenuItem value="smoke">Smoke</MenuItem>
-                <MenuItem value="gun">Gun</MenuItem>
-                <MenuItem value="weapon">Weapon</MenuItem>
+                <MenuItem value="all">Todas las Alertas</MenuItem>
+                <MenuItem value="unread">No leídas</MenuItem>
+                <MenuItem value="bolsas">Bolsas de Basura</MenuItem>
+                <MenuItem value="desmonte">Desmonte / Escombros</MenuItem>
+                <MenuItem value="costales">Costales y Bultos</MenuItem>
               </Select>
             </FormControl>
             {filteredNotifications.map((notification, index) => (
               <MenuItem key={index} onClick={handleAlertClose}>
-                {notification.type === "fire" && <FireIcon />}
-                {notification.type === "smoke" && <SmokeIcon />}
-                {notification.type === "gun" && <GunAlertOutlinedIcon />}
+                
+                
+                
                 <div>
                   <Typography variant="subtitle1">
                     {notification.type.charAt(0).toUpperCase() +
@@ -290,13 +290,13 @@ const Topbar = () => {
               <Avatar>
                 <PersonIcon />
               </Avatar>
-              My Profile
+              Mi Perfil
             </MenuItem>
             <MenuItem onClick={handleLogout}>
               <Avatar>
                 <ExitToAppOutlinedIcon />
               </Avatar>
-              Logout
+              Cerrar Sesión
             </MenuItem>
           </Menu>
           <Box ml={1}>

@@ -1,6 +1,9 @@
+import os
 import json
 import time
-from flask import Flask, Response, jsonify
+from dotenv import load_dotenv
+load_dotenv()
+from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 import logging
 import requests
@@ -13,6 +16,7 @@ from endpoints.auth.helpers import revoke_token, is_token_revoked
 from endpoints import Foresight_API
 # Importing the extensions
 from extensions import db, jwt
+from ai_engine import AIEngine
 from models import Roles
 from models.camera import CameraDetails
 from webcam import webcam
@@ -38,6 +42,43 @@ jwt.init_app(app)
 # Enabling Cross-Origin Resource Sharing (CORS)
 CORS(app)
 
+# --- REINICIO AUTOMÁTICO DE SESIÓN (LIMPIEZA DE EVIDENCIAS E INCIDENTES) ---
+with app.app_context():
+    from models.videos import Videos
+    from models.detections import Detections
+    from models.incidents import Incidents
+    from models.notifications import Notifications
+    try:
+        # Eliminar registros de sesiones anteriores manteniendo Usuarios y Roles
+        Videos.query.delete()
+        Detections.query.delete()
+        Incidents.query.delete()
+        Notifications.query.delete()
+        db.session.commit()
+        print("> [RESET] Base de datos limpia: Evidencias e incidentes anteriores reiniciados.")
+    except Exception as e:
+        db.session.rollback()
+        print(f"> [RESET ERROR] No se pudo limpiar la BD: {e}")
+
+    # Limpiar archivos fisicos de videos y fotos en disco
+    evidence_dir = os.path.join(os.getcwd(), 'static', 'evidences')
+    if os.path.exists(evidence_dir):
+        for f in os.listdir(evidence_dir):
+            file_path = os.path.join(evidence_dir, f)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+            except Exception:
+                pass
+        print("> [RESET] Carpeta static/evidences limpia para nueva sesion.")
+# --------------------------------------------------------------------------
+
+# --- INICIALIZAR MOTOR DE IA ---
+# Le pasamos app.app_context para que el hilo de la camara pueda guardar en la BD
+ai_engine = AIEngine(app.app_context)
+webcam.ai_engine = ai_engine
+# -------------------------------
+
 
 @app.route('/local-camera/feed')
 def local_camera_feed():
@@ -48,6 +89,48 @@ def local_camera_feed():
         )
     except RuntimeError as error:
         return jsonify({"success": False, "msg": str(error)}), 503
+
+@app.route('/local-camera/source', methods=['GET'])
+def get_camera_source():
+    available = webcam.get_available_sources()
+    return jsonify({
+        "success": True,
+        "current": webcam.device_index,
+        "available": available
+    }), 200
+
+@app.route('/local-camera/source', methods=['POST'])
+def set_camera_source():
+    data = request.get_json(silent=True) or {}
+    new_source = data.get("source")
+    if new_source is None:
+        return jsonify({"success": False, "msg": "Se requiere el parametro 'source'"}), 400
+
+    success, msg = webcam.change_source(new_source)
+    if success:
+        return jsonify({"success": True, "msg": msg, "current": webcam.device_index}), 200
+    else:
+        return jsonify({"success": False, "msg": msg}), 500
+
+@app.route('/local-camera/abandonment-time', methods=['GET'])
+def get_abandonment_time():
+    if getattr(webcam, 'ai_engine', None) and getattr(webcam.ai_engine, 'state_machine', None):
+        return jsonify({"success": True, "time": webcam.ai_engine.state_machine.abandonment_time}), 200
+    return jsonify({"success": True, "time": 10.0}), 200
+
+@app.route('/local-camera/abandonment-time', methods=['POST'])
+def set_abandonment_time():
+    data = request.get_json(silent=True) or {}
+    new_time = data.get("time")
+    if new_time is not None:
+        try:
+            val = float(new_time)
+            if getattr(webcam, 'ai_engine', None) and getattr(webcam.ai_engine, 'state_machine', None):
+                webcam.ai_engine.state_machine.abandonment_time = val
+                return jsonify({"success": True, "time": val}), 200
+        except ValueError:
+            pass
+    return jsonify({"success": False, "msg": "Valor de tiempo invalido o motor IA no iniciado"}), 400
 
 #Initialize boolean
 initialized = False

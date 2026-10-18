@@ -14,7 +14,7 @@ const CenterText = ({ dataWithArc, centerX, centerY, data }) => (
       {dataWithArc.reduce((sum, data) => sum + data.value, 0)}
     </tspan>
     <tspan fontSize={14} fontWeight="bold" x={centerX} dy="1.5em">
-      Dispatches
+      Residuos
     </tspan>
   </text>
 );

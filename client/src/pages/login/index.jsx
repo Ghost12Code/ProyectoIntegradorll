@@ -106,11 +106,11 @@ const Login = (props, { ...others }) => {
   const getValue = () => {};
   // Form validation schema
   const loginSchema = yup.object().shape({
-    email: yup.string().required("Email is Required"),
+    email: yup.string().required("El correo es obligatorio"),
     password: yup
       .string()
-      .matches(passwordRegEx, "Invalid Password!")
-      .required("Password is Required"),
+      .matches(passwordRegEx, "Contraseña inválida")
+      .required("La contraseña es obligatoria"),
   });
 
   const buttonSx = {
@@ -151,28 +151,22 @@ const Login = (props, { ...others }) => {
         >
           <Box
             display="flex"
+            flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            p={3}
-            sx={{
-              "& .avater-image": {
-                backgroundColor: colors.secondary[500],
-              },
-            }}
+            p={2}
+            mb={2}
           >
-            <img
-              className="logo-image"
-              alt="profile user"
-              width="124px"
-              height="102px"
-              backgroundColor="white"
-              src={"../../assets/logoNew.png"}
-              style={{ cursor: "pointer", padding: "5px" }}
-            />
+            <Typography variant="h4" fontWeight="bold" textAlign={"center"} color="#1F497D">
+              SIMRA
+            </Typography>
+            <Typography variant="subtitle1" fontWeight="600" textAlign={"center"} color="#FF5722" mt={0.5}>
+              Sistema de Detección de Residuos Sólidos
+            </Typography>
+            <Typography variant="caption" textAlign={"center"} color="textSecondary">
+              Puente Santa Isabel - Parcona, Ica
+            </Typography>
           </Box>
-          <Typography variant="h6" fontWeight="bold" textAlign={"center"} p={3}>
-            Login to Foresight
-          </Typography>
 
           <Formik
             onSubmit={handleFormSubmit}
@@ -207,7 +201,7 @@ const Login = (props, { ...others }) => {
                         justifyContent="center"
                         alignContent="center"
                         type="text"
-                        label="Email"
+                        label="Correo Electrónico"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.email}
@@ -223,7 +217,7 @@ const Login = (props, { ...others }) => {
                         fullWidth
                         variant="filled"
                         type={showPassword ? "text" : "password"}
-                        label="Password"
+                        label="Contraseña"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.password}
@@ -269,7 +263,7 @@ const Login = (props, { ...others }) => {
                                 onChange={() => getValue()}
                               ></Checkbox>
                             }
-                            label="Remember Me"
+                            label="Recordarme"
                             sx={{ color: colors.blackAccents[500] }}
                           ></FormControlLabel>
                         </Box>
@@ -290,7 +284,7 @@ const Login = (props, { ...others }) => {
                             alignItems="right"
                             justifyContent="right"
                           >
-                            Forgot Password?
+                            ¿Olvidaste tu contraseña?
                           </Link>
                         </Box>
                       </Box>

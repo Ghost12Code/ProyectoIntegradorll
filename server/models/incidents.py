@@ -31,6 +31,7 @@ class Incidents(db.Model):
         # Serializes the instance for JSON responses
         return {
             'incidents_id': self.incidents_id,
+            'notification_id': self.notification_id,
             'date': self.date.isoformat() if self.date else None,
             'type': self.type,
             'module': self.module,

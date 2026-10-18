@@ -564,22 +564,28 @@ export const mockBarData = [
 //This data shows when we pull numbers from our DB and display.
 export const mockPieData = [
   {
-    id: "fire_related",
-    label: "Fire Related",
-    value: 100,
-    color: tokens.blueAccents[500], // Corrected color
+    id: "Bolsas de Basura",
+    label: "Bolsas de Basura",
+    value: 10,
+    color: "#2e7d32",
   },
   {
-    id: "weapon_related",
-    label: "Weapon Related",
-    value: 20,
-    color: tokens.orangeAccents[500], // Corrected color
+    id: "Desmonte / Escombros",
+    label: "Desmonte / Escombros",
+    value: 5,
+    color: "#ff5722",
   },
   {
-    id: "others",
-    label: "Others",
-    value: 100,
-    color: tokens.blackAccents[500], // Corrected color
+    id: "Costales y Bultos",
+    label: "Costales y Bultos",
+    value: 3,
+    color: "#3f51b5",
+  },
+  {
+    id: "Otros Desechos",
+    label: "Otros Desechos",
+    value: 2,
+    color: "#607d8b",
   },
 ];
 

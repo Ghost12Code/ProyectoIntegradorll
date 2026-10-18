@@ -36,7 +36,7 @@ function CustomToolbar({ setFilterButtonEl }) {
           <VscBellDot style={{ fontSize: "2rem" }} />
 
           <Typography variant="h6" p={2} fontWeight={"bold"}>
-            All Notifications
+            Todas las Notificaciones
           </Typography>
         </Box>
 
@@ -155,9 +155,18 @@ const Notifications = ({ changeWelcomeText }) => {
   };
   useEffect(() => {
     if (videoRef.current && selectedVideo) {
-      videoRef.current.load();
-      videoRef.current.play();
-      videoRef.current.playbackRate = playbackSpeed; // Set the playback speed
+      try {
+        videoRef.current.playbackRate = playbackSpeed;
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            // Ignorar de forma segura la interrupcion si el usuario cambia rapido de seleccion
+            console.log("Reproduccion de video controlada:", err.message);
+          });
+        }
+      } catch (e) {
+        // Ignorar de forma segura
+      }
     }
   }, [selectedVideo, playbackSpeed]);
 
@@ -371,7 +380,7 @@ const Notifications = ({ changeWelcomeText }) => {
     },
     {
       field: "date",
-      headerName: "Date/Time",
+      headerName: "Fecha y Hora",
       flex: 1,
       disableColumnMenu: true,
       cellClassName: "name-column--cell",
@@ -381,7 +390,7 @@ const Notifications = ({ changeWelcomeText }) => {
     },
     {
       field: "type",
-      headerName: "Type",
+      headerName: "Tipo de Residuo",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -391,7 +400,7 @@ const Notifications = ({ changeWelcomeText }) => {
 
     {
       field: "module",
-      headerName: "Module",
+      headerName: "Módulo",
       renderCell: (params) => (
         // Customize the rendering of the 'Module' column
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -412,14 +421,14 @@ const Notifications = ({ changeWelcomeText }) => {
     },
     {
       field: "camera",
-      headerName: "Camera Location",
+      headerName: "Cámara",
       flex: 1,
       disableColumnMenu: true,
       cellClassName: "name-column--cell",
     },
     {
       field: "status",
-      headerName: "Status",
+      headerName: "Estado",
       renderCell: (params) => (
         <div style={{ display: "flex", alignItems: "center" }}>
           <span
@@ -471,7 +480,7 @@ const Notifications = ({ changeWelcomeText }) => {
                   />
                 ) : (
                   <Typography variant="h6">
-                    Select a notification to view image
+                    Seleccione una alerta para ver la captura
                   </Typography>
                 )}
               </Box>
@@ -604,7 +613,7 @@ const Notifications = ({ changeWelcomeText }) => {
                   </video>
                 ) : (
                   <Typography variant="h6">
-                    Select a notification to view video
+                    Seleccione una alerta para reproducir el video
                   </Typography>
                 )}
               </Box>

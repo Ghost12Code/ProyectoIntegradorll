@@ -475,35 +475,35 @@ const Usermgnt = () => {
     },
     {
       field: "username",
-      headerName: "Name",
+      headerName: "Nombre",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
     },
     {
       field: "email",
-      headerName: "Email Address",
+      headerName: "Correo Electrónico",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
     },
     {
       field: "date_joined",
-      headerName: "Joining Date",
+      headerName: "Fecha de Registro",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
     },
     {
       field: "roles",
-      headerName: "Role",
+      headerName: "Rol",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "Acciones",
       flex: 1, // Space columns equally
       cellClassName: "name-column--cell",
       disableColumnMenu: true,

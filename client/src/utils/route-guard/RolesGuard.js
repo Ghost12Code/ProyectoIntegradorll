@@ -3,15 +3,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-const RoleGuard = ({ children, requiredRole }) => {
+const RoleGuard = ({ children, requiredRole, requiredRoles }) => {
   const { isLoggedIn, Role } = useSelector((state) => state.account);
 
-  // Ensure requiredRoles is an array
-  const validRequiredRoles = Array.isArray(requiredRole) ? requiredRole : [];
-  console.log(validRequiredRoles);
+  const rolesToCheck = requiredRole || requiredRoles || [];
+  const validRequiredRoles = Array.isArray(rolesToCheck) ? rolesToCheck : [rolesToCheck];
 
-  // Check if the user's role matches any of the required roles
-  const hasRequiredRole = validRequiredRoles.includes(Role);
+  // Si es Super Administrator o Administrator, siempre permitir
+  const isSuper = Role === "Super Administrator" || Role === "Administrator" || Role === "Admin";
+  const hasRequiredRole = isSuper || validRequiredRoles.includes(Role);
 
   if (!isLoggedIn || !hasRequiredRole) {
     return <Redirect to="/401" />;
@@ -22,7 +22,8 @@ const RoleGuard = ({ children, requiredRole }) => {
 
 RoleGuard.propTypes = {
   children: PropTypes.node,
-  requiredRoles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  requiredRole: PropTypes.arrayOf(PropTypes.string),
+  requiredRoles: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default RoleGuard;

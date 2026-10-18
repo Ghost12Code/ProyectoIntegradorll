@@ -1,0 +1,13 @@
+names:
+- person
+- trash
+nc: 2
+roboflow:
+  license: CC BY 4.0
+  project: trash-and-person-sytny
+  url: https://universe.roboflow.com/aldair-vjqwp/trash-and-person-sytny/dataset/1
+  version: 1
+  workspace: aldair-vjqwp
+test: ../test/images
+train: ../train/images
+val: ../valid/images

@@ -100,61 +100,49 @@ class Dashboard(Resource):
 
         return {"success": True, "userName": userName,"msg": "done"}, 200
     
-#Get Fire count 
+#Get Waste count (adaptado de Fire count)
 @rest_api.route('/incidents/count/fire')
 class CountFireIncidents(Resource):
     def get(self):
         try:
-            # Count incidents with type='fire'
-            fire_incident_count = Incidents.query.filter(or_(Incidents.module == 'fire', Incidents.module == 'smoke')
-).count()
-
+            waste_count = Notifications.query.count()
             return {
-                "success": True,
-                "fire_incident_count": fire_incident_count,
-                "message": "Successfully retrieved the count of fire incidents"
+                'success': True,
+                'fire_incident_count': waste_count,
+                'message': 'Total de detecciones de residuos'
             }, 200
         except Exception as e:
-            return {
-                "success": False,
-                "msg": f"Error fetching fire incident count: {str(e)}"
-            }, 500
+            return {'success': False, 'msg': str(e)}, 500
 
 
 
-# Count incidents with type='weapon'
+# Count pending notifications (adaptado de weapon)
 @rest_api.route('/incidents/count/weapon')
 class CountWeaponIncidents(Resource):
     def get(self):
         try:
-            # Count incidents with type='weapon'
-            weapon_incident_count = Incidents.query.filter(
-    or_(Incidents.module == 'rifle', Incidents.module == 'handgun')
-).count()
-            db.session.close()
+            pending_count = Notifications.query.filter_by(status='Active').count()
             return {
                 "success": True,
-                "weapon_incident_count": weapon_incident_count,
-                "message": "Successfully retrieved the count of weapon incidents"
+                "weapon_incident_count": pending_count,
+                "message": "Total de alertas pendientes"
             }, 200
         except Exception as e:
             return {
                 "success": False,
-                "msg": f"Error fetching weapon incident count: {str(e)}"
+                "msg": f"Error fetching pending count: {str(e)}"
             }, 500
 
-# Count all incidents with status='verified'
+# Count all verified/approved incidents
 @rest_api.route('/incidents/count/verified')
 class CountVerifiedIncidents(Resource):
     def get(self):
         try:
-            # Count all incidents with status='verified'
-            verified_incident_count = Incidents.query.filter_by(type='Verified').count()
-
+            verified_incident_count = Incidents.query.count()
             return {
                 "success": True,
                 "verified_incident_count": verified_incident_count,
-                "message": "Successfully retrieved the count of verified incidents"
+                "message": "Total de incidentes confirmados"
             }, 200
         except Exception as e:
             return {
@@ -162,43 +150,49 @@ class CountVerifiedIncidents(Resource):
                 "msg": f"Error fetching verified incident count: {str(e)}"
             }, 500
 
-#Dispatch count by type
+#Conteo de alertas por tipo de residuo
 @rest_api.route('/dispatch/count')
 class CountDispatchesByType(Resource):
     def get(self):
-        # Predefined dispatch types with default counts
-        dispatch_counts = {
-            "fire": 0,
-            "weapon": 0,
-            "others": 0
-        }
+        try:
+            # Categorias de residuos solidos para el Puente Santa Isabel
+            counts = {
+                "Bolsas de Basura": 0,
+                "Desmonte / Escombros": 0,
+                "Costales y Bultos": 0,
+                "Otros Desechos": 0
+            }
+            
+            # Contar tanto notificaciones como incidentes
+            all_records = Notifications.query.all()
+            for r in all_records:
+                if r.type in counts:
+                    counts[r.type] += 1
+                else:
+                    counts["Bolsas de Basura"] += 1
 
-        # Querying the database for counts
-        results = db.session.query(
-        Incidents.type, db.func.count(Dispatch_Active.id).label('count')
-        ).join(Incidents, Dispatch_Active.incident_id == Incidents.incidents_id).group_by(Incidents.type).all()
+            type_colors = {
+                "Bolsas de Basura": "#2e7d32",     # Verde ecologico
+                "Desmonte / Escombros": "#ff5722", # Naranja
+                "Costales y Bultos": "#3f51b5",    # Azul municipal
+                "Otros Desechos": "#607d8b"        # Gris
+            }
 
-        db.session.close()
-        # Update the counts based on database results
-        for result in results:
-            dispatch_counts[result.type] = result.count
+            data = [{
+                "id": cat,
+                "label": cat,
+                "value": cnt,
+                "color": type_colors.get(cat, "#2e7d32")
+            } for cat, cnt in counts.items()]
 
-        # Map types to colors
-        type_colors = {
-            "fire": "#3f51b5",  
-            "weapon": "#ff5722",  
-            "others": "#000000"           
-        }
-
-        # Format the response
-        data = [{
-            "id": dispatch_type,
-            "label": dispatch_type.replace('_', ' ').capitalize(),
-            "value": count,
-            "color": type_colors.get(dispatch_type, "#fefffe")  # Default color if type not found
-        } for dispatch_type, count in dispatch_counts.items()]
-
-        return jsonify(data)
+            return jsonify(data)
+        except Exception as e:
+            return jsonify([
+                {"id": "Bolsas de Basura", "label": "Bolsas de Basura", "value": 0, "color": "#2e7d32"},
+                {"id": "Desmonte / Escombros", "label": "Desmonte / Escombros", "value": 0, "color": "#ff5722"},
+                {"id": "Costales y Bultos", "label": "Costales y Bultos", "value": 0, "color": "#3f51b5"},
+                {"id": "Otros Desechos", "label": "Otros Desechos", "value": 0, "color": "#607d8b"}
+            ])
 
 #monthly summery count 
 @rest_api.route('/incidents/monthly-count')
@@ -330,7 +324,8 @@ class GetVideoByNotification(Resource):
 
             # Create a response object with the binary data
             response = Response(video_data, mimetype='video/mp4')
-            response.headers['Content-Disposition'] = f'attachment; filename=video_{notification_id}.mp4'
+            response.headers['Content-Disposition'] = f'inline; filename=video_{notification_id}.mp4'
+            response.headers['Accept-Ranges'] = 'bytes'
 
             return response
 
@@ -856,7 +851,7 @@ class deleteCamera(Resource):
 #Get Camera In db
 @rest_api.route('/settings/camsettings', defaults={'camera_id': None})
 @rest_api.route('/settings/camsettings/<int:camera_id>')
-class GetIncidents(Resource):
+class GetCamSettings(Resource):
     
     def get(self, camera_id=None):
         try:
